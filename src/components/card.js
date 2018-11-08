@@ -6,9 +6,9 @@ class Card extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputValue: '1',
+            brlValue: '1',
+            eurValue: '',
             BRL: '',
-            EUR: '',
             calculedValude: ''
         };
     }
@@ -32,30 +32,31 @@ class Card extends Component {
 
     _brlToEur = ev => {
         this.setState({
-            inputValue: ev.target.value,
-            calculedValude:
-                getFixedValue(ev.target.value) * getFixedValue(this.state.BRL)
+            eurValue: getFixedValue(ev.target.value) * getFixedValue(this.state.BRL)
         });
     };
 
     _eurToBrl = ev => {
-        // TODO: make the calc eur to brl
+        this.setState({
+            brlValue: getFixedValue(ev.target.value) * getFixedValue(this.state.BRL)
+        });
     };
 
     render() {
+        // TODO: fix inputs
         return (
             <div className="card">
                 <div className="input__container">
-                    <label>BRL</label>
+                    <label>EUR</label>
                     <input
-                        value={this.state.inputValue}
+                        value={this.state.eurValue}
                         onChange={evt => this._brlToEur(evt)}
                     />
                 </div>
                 <div className="input__container">
-                    <label>EUR</label>
+                    <label>BRL</label>
                     <input
-                        value={getFixedValue(this.state.calculedValude)}
+                        value={this.state.brlValue}
                         onChange={evt => this._eurToBrl(evt)}
                     />
                 </div>
