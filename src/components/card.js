@@ -14,7 +14,7 @@ class Card extends Component {
     }
 
     componentDidMount() {
-        const getData = () => {
+        (() => {
             fetch(API.endpoint)
                 .then(r => r.json())
                 .then(result =>
@@ -26,37 +26,41 @@ class Card extends Component {
                 .catch(e => {
                     console.log(e);
                 });
-        };
-        getData();
+        })();
+
+        this.EUR_INPUT.focus();
+
     }
 
     _brlToEur = ev => {
         this.setState({
             inputValue: ev.target.value,
-            calculedValude:
-                getFixedValue(ev.target.value) * getFixedValue(this.state.BRL)
+            calculedValude: ev.target.value * this.state.BRL
         });
     };
 
     _eurToBrl = ev => {
         // TODO: make the calc eur to brl
+        console.log(ev.target.value)
+        console.log(this.state)
     };
 
     render() {
         return (
             <div className="card">
                 <div className="input__container">
-                    <label>BRL</label>
+                    <label>EUR</label>
                     <input
                         value={this.state.inputValue}
                         onChange={evt => this._brlToEur(evt)}
+                        ref={input => this.EUR_INPUT = input }
                     />
                 </div>
                 <div className="input__container">
-                    <label>EUR</label>
+                    <label>BRL</label>
                     <input
                         value={getFixedValue(this.state.calculedValude)}
-                        onChange={evt => this._eurToBrl(evt)}
+                        readOnly
                     />
                 </div>
             </div>
