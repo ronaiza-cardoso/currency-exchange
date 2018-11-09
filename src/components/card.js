@@ -6,14 +6,15 @@ class Card extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputValue: '1',
+            brlValue: '1',
+            eurValue: '',
             BRL: '',
-            EUR: '',
             calculedValude: ''
         };
     }
 
     componentDidMount() {
+        // Self-invoking function
         (() => {
             fetch(API.endpoint)
                 .then(r => r.json())
@@ -46,12 +47,13 @@ class Card extends Component {
     };
 
     render() {
+        // TODO: fix inputs
         return (
             <div className="card">
                 <div className="input__container">
                     <label>EUR</label>
                     <input
-                        value={this.state.inputValue}
+                        value={this.state.eurValue}
                         onChange={evt => this._brlToEur(evt)}
                         ref={input => this.EUR_INPUT = input }
                     />
